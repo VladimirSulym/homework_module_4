@@ -1,3 +1,8 @@
+import json
+import os
+from itertools import product
+
+
 class Product:
     name: str
     description: str
@@ -24,6 +29,23 @@ class Category:
         self.products = products
         Category.category_count += 1
         Category.product_count += len(products) if products else 0
+
+path_file_date = os.path.join(os.path.dirname(__file__), 'data', 'products.json')
+
+def read_data_from_json(path):
+    with open(path, 'r', encoding='UTF-8') as f:
+        data = json.load(f)
+        return data
+
+def fill_class_with_data(categories):
+    result = []
+    for category in categories:
+        products = []
+        for product in category['products']:
+            products.append(Product(**product))
+        category['products'] = products
+        result.append(Category(**category))
+    return result
 
 
 # if __name__ == "__main__":

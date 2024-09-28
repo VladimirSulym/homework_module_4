@@ -1,4 +1,7 @@
-import pytest
+import os
+from unittest.mock import patch
+
+from main import read_data_from_json
 
 def test_product_init(product_iphone):
     assert product_iphone.name == "Iphone 15"
