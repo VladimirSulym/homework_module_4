@@ -1,10 +1,9 @@
 import json
 import os
-from itertools import product
 
 
 class Product:
-    product_list = []
+    __product_list = []
     name: str
     description: str
     price: float
@@ -13,19 +12,19 @@ class Product:
     def __init__(self, name, description, price, quantity):
         self.name = name
         self.description = description
-        self.price = price
+        self.__price = price
         self.quantity = quantity
 
     @classmethod
     def new_product(cls, value):
         name, description, price, quantity = value.values()
-        for index, product in enumerate(Product.product_list):
+        for index, product in enumerate(Product.__product_list):
             if product['name'] == name:
-                Product.product_list[index]['quantity'] = product['quantity'] + quantity
+                Product.__product_list[index]['quantity'] = product['quantity'] + quantity
                 if product['price'] < price:
-                    Product.product_list[index]['price'] = price
+                    Product.__product_list[index]['price'] = price
             return cls(product['name'], product['description'], product['price'], product['quantity'])
-        Product.product_list.append({
+        Product.__product_list.append({
             'name': name,
             'description': description,
             'price': price,
@@ -33,6 +32,16 @@ class Product:
         })
         return cls(name, description, price, quantity)
 
+    @property
+    def price(self):
+        return self.__price
+
+    @price.setter
+    def price(self, value):
+        if value <= 0:
+            print("Цена не должна быть нулевая или отрицательная")
+        else:
+            self.__price = value
 
 class Category:
     name: str
