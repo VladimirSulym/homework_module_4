@@ -1,7 +1,10 @@
 import json
 import os
+from itertools import product
+
 
 class Product:
+    product_list = []
     name: str
     description: str
     price: float
@@ -14,8 +17,20 @@ class Product:
         self.quantity = quantity
 
     @classmethod
-    def new_product(cls, product):
-        name, description, price, quantity = product.values()
+    def new_product(cls, value):
+        name, description, price, quantity = value.values()
+        for index, product in enumerate(Product.product_list):
+            if product['name'] == name:
+                Product.product_list[index]['quantity'] = product['quantity'] + quantity
+                if product['price'] < price:
+                    Product.product_list[index]['price'] = price
+            return cls(product['name'], product['description'], product['price'], product['quantity'])
+        Product.product_list.append({
+            'name': name,
+            'description': description,
+            'price': price,
+            'quantity': quantity
+        })
         return cls(name, description, price, quantity)
 
 
@@ -146,3 +161,12 @@ if __name__ == "__main__":
     print(new_product.price)
     new_product.price = 0
     print(new_product.price)
+
+    new_product = Product.new_product(
+        {"name": "Samsung Galaxy S23 Ultra", "description": "256GB, Серый цвет, 200MP камера", "price": 190000.0,
+        "quantity": 5})
+
+    print(new_product.name)
+    print(new_product.description)
+    print(new_product.price)
+    print(new_product.quantity)
