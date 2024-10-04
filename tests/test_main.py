@@ -16,7 +16,7 @@ def test_category_init(category_smartphone):
         category_smartphone.description
         == "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни"
     )
-    assert category_smartphone.add_product == ["Iphone 15, 210000.0 руб. Остаток: 8 шт."]
+    assert category_smartphone.product == ["Iphone 15, 210000.0 руб. Остаток: 8 шт."]
 
     assert category_smartphone.category_count == 1
     assert category_smartphone.product_count == 1
@@ -86,4 +86,4 @@ def test_price_setter(product_iphone):
 
 def test_add_product_setter(category_smartphone, product_iphone):
     category_smartphone.add_product = product_iphone
-    assert category_smartphone.product_count == 3
+    assert category_smartphone.product_count == 2

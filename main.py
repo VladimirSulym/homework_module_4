@@ -56,17 +56,21 @@ class Category:
         Category.category_count += 1
         Category.product_count += len(products) if products else 0
 
+    def add_product(self, value):
+        self.__products.append(value)
+        Category.product_count += 1
+
     @property
-    def add_product(self):
+    def product(self):
         result = []
         for product in self.__products:
             result.append(f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.")
         return result
 
-    @add_product.setter
-    def add_product(self, value):
-        self.__products.append(value)
-        Category.product_count += 1
+    # @add_product.setter
+    # def add_product(self, value):
+    #     self.__products.append(value)
+    #     Category.product_count += 1
 
 
 path_file_date = os.path.join(os.path.dirname(__file__), "data", "products.json")
@@ -136,8 +140,8 @@ def fill_class_with_data(categories):
 #     print(Category.category_count)
 #     print(Category.product_count)
 
-# #### Задание 14_2
-#
+# ### Задание 14_2
+
 # product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
 # product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
 # product3 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
