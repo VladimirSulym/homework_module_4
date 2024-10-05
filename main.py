@@ -19,7 +19,7 @@ class Product:
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
 
     def __add__(self, other):
-        return self.quantity + other.quantity
+        return self.quantity * self.price + other.quantity * other.price
 
     @classmethod
     def new_product(cls, value):
@@ -78,11 +78,6 @@ class Category:
         for product in self.__products:
             result.append(f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.")
         return result
-
-    # @add_product.setter
-    # def add_product(self, value):
-    #     self.__products.append(value)
-    #     Category.product_count += 1
 
 
 path_file_date = os.path.join(os.path.dirname(__file__), "data", "products.json")

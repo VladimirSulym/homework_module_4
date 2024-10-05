@@ -84,6 +84,18 @@ def test_price_setter(product_iphone):
     assert product_iphone.price == 300000.0
 
 
-def test_add_product_setter(category_smartphone, product_iphone):
-    category_smartphone.add_product = product_iphone
-    assert category_smartphone.product_count == 2
+def test_add_product(category_smartphone, product_iphone):
+    category_smartphone.add_product(product_iphone)
+    assert category_smartphone.product_count == 3
+
+
+def test_product_str(product_iphone):
+    assert str(product_iphone) == "Iphone 15, 210000.0 руб. Остаток: 8 шт."
+
+
+def test_product_add(product_iphone):
+    assert product_iphone + product_iphone == 3360000
+
+
+def test_category_str(category_smartphone):
+    assert str(category_smartphone) == "Смартфоны, количество продуктов: 8 шт."
