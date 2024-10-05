@@ -57,9 +57,11 @@ def product_for_new_product(product_iphone):
         }
     )
 
+
 @pytest.fixture()
-def product_lawn_grass ():
+def product_lawn_grass():
     return LawnGrass("Газонная трава", "Элитная трава для газона", 500.0, 20, "Россия", "7 дней", "Зеленый")
+
 
 @pytest.fixture()
 def product_smartphone():
