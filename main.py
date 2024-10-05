@@ -72,8 +72,11 @@ class Category:
         return f"{self.name}, количество продуктов: {number_of_products} шт."
 
     def add_product(self, value):
-        self.__products.append(value)
-        Category.product_count += 1
+        if isinstance(value, Product):
+            self.__products.append(value)
+            Category.product_count += 1
+        else:
+            raise TypeError
 
     @property
     def products(self):
@@ -172,31 +175,31 @@ if __name__ == '__main__':
     # print(grass2.germination_period)
     # print(grass2.color)
 
-    smartphone_sum = smartphone1 + smartphone2
-    print(smartphone_sum)
-
-    grass_sum = grass1 + grass2
-    print(grass_sum)
-
-    try:
-        invalid_sum = smartphone1 + grass1
-    except TypeError:
-        print("Возникла ошибка TypeError при попытке сложения")
-    else:
-        print("Не возникла ошибка TypeError при попытке сложения")
-
-    # category_smartphones = Category("Смартфоны", "Высокотехнологичные смартфоны", [smartphone1, smartphone2])
-    # category_grass = Category("Газонная трава", "Различные виды газонной травы", [grass1, grass2])
+    # smartphone_sum = smartphone1 + smartphone2
+    # print(smartphone_sum)
     #
-    # category_smartphones.add_product(smartphone3)
-    #
-    # print(category_smartphones.products)
-    #
-    # print(Category.product_count)
+    # grass_sum = grass1 + grass2
+    # print(grass_sum)
     #
     # try:
-    #     category_smartphones.add_product("Not a product")
+    #     invalid_sum = smartphone1 + grass1
     # except TypeError:
-    #     print("Возникла ошибка TypeError при добавлении не продукта")
+    #     print("Возникла ошибка TypeError при попытке сложения")
     # else:
-    #     print("Не возникла ошибка TypeError при добавлении не продукта")
+    #     print("Не возникла ошибка TypeError при попытке сложения")
+
+    category_smartphones = Category("Смартфоны", "Высокотехнологичные смартфоны", [smartphone1, smartphone2])
+    category_grass = Category("Газонная трава", "Различные виды газонной травы", [grass1, grass2])
+
+    category_smartphones.add_product(smartphone3)
+
+    print(category_smartphones.products)
+
+    print(Category.product_count)
+
+    try:
+        category_smartphones.add_product("Not a product")
+    except TypeError:
+        print("Возникла ошибка TypeError при добавлении не продукта")
+    else:
+        print("Не возникла ошибка TypeError при добавлении не продукта")
