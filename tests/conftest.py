@@ -1,6 +1,6 @@
 import pytest
 
-from main import Category, Product, LawnGrass, Smartphone
+from main import Category, LawnGrass, Product, Smartphone
 
 
 @pytest.fixture()
