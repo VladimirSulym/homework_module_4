@@ -3,6 +3,7 @@ import os
 
 
 class Product:
+    __product_list = []
     name: str
     description: str
     price: float
@@ -11,8 +12,40 @@ class Product:
     def __init__(self, name, description, price, quantity):
         self.name = name
         self.description = description
-        self.price = price
+        self.__price = price
         self.quantity = quantity
+
+    def __str__(self):
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other):
+        return self.quantity * self.price + other.quantity * other.price
+
+    @classmethod
+    def new_product(cls, value):
+        name, description, price, quantity = value.values()
+        for index, product in enumerate(Product.__product_list):
+            if product["name"] == name:
+                Product.__product_list[index]["quantity"] = product["quantity"] + quantity
+                if product["price"] < price:
+                    Product.__product_list[index]["price"] = price
+            return cls(product["name"], product["description"], product["price"], product["quantity"])
+        Product.__product_list.append({"name": name, "description": description, "price": price, "quantity": quantity})
+        return cls(name, description, price, quantity)
+
+    @property
+    def price(self):
+        return self.__price
+
+    @price.setter
+    def price(self, value):
+        if value <= 0:
+            print("Цена не должна быть нулевая или отрицательная")
+        elif 0 < value < self.__price:
+            if input("подтвердите понижение цены y / n => ") == "y":
+                self.__price = value
+        else:
+            self.__price = value
 
 
 class Category:
@@ -25,9 +58,26 @@ class Category:
     def __init__(self, name, description, products):
         self.name = name
         self.description = description
-        self.products = products
+        self.__products = products
         Category.category_count += 1
         Category.product_count += len(products) if products else 0
+
+    def __str__(self):
+        number_of_products = 0
+        for product in self.__products:
+            number_of_products += product.quantity
+        return f"{self.name}, количество продуктов: {number_of_products} шт."
+
+    def add_product(self, value):
+        self.__products.append(value)
+        Category.product_count += 1
+
+    @property
+    def products(self):
+        result = []
+        for product in self.__products:
+            result.append(f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.")
+        return result
 
 
 path_file_date = os.path.join(os.path.dirname(__file__), "data", "products.json")
@@ -96,3 +146,70 @@ def fill_class_with_data(categories):
 #
 #     print(Category.category_count)
 #     print(Category.product_count)
+
+# ### Задание 14_2
+
+# product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+# product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
+# product3 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
+#
+# category1 = Category(
+#     "Смартфоны",
+#     "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
+#     [product1, product2, product3]
+# )
+#
+# # print(category1.products)
+# product4 = Product("55\" QLED 4K", "Фоновая подсветка", 123000.0, 7)
+# category1.add_product = product4
+# # print(category1.products)
+# print(category1.product_count)
+#
+# new_product = Product.new_product(
+#     {"name": "Samsung Galaxy S23 Ultra", "description": "256GB, Серый цвет, 200MP камера", "price": 180000.0,
+#      "quantity": 5})
+# print(new_product.name)
+# print(new_product.description)
+# print(new_product.price)
+# print(new_product.quantity)
+#
+# new_product.price = 800
+# print(new_product.price)
+#
+# new_product.price = -100
+# print(new_product.price)
+# new_product.price = 0
+# print(new_product.price)
+#
+# new_product = Product.new_product(
+#     {"name": "Samsung Galaxy S23 Ultra", "description": "256GB, Серый цвет, 200MP камера", "price": 190000.0,
+#     "quantity": 5})
+#
+# print(new_product.name)
+# print(new_product.description)
+# print(new_product.price)
+# print(new_product.quantity)
+
+# ### Заданиие 15_1
+
+# product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+# product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
+# product3 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
+
+# print(str(product1))
+# print(str(product2))
+# print(str(product3))
+
+# category1 = Category(
+#     "Смартфоны",
+#     "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
+#     [product1, product2, product3]
+# )
+#
+# print(str(category1))
+#
+# print(category1.products)
+#
+# print(product1 + product2)
+# print(product1 + product3)
+# print(product2 + product3)

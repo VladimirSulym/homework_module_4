@@ -44,3 +44,15 @@ def products_for_test():
             ],
         },
     ]
+
+
+@pytest.fixture()
+def product_for_new_product(product_iphone):
+    return product_iphone.new_product(
+        {
+            "name": "Samsung Galaxy S23 Ultra",
+            "description": "256GB, Серый цвет, 200MP камера",
+            "price": 190000.0,
+            "quantity": 5,
+        }
+    )
