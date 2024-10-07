@@ -1,6 +1,6 @@
 import pytest
 
-from main import Category, Product
+from main import Category, Product, LawnGrass, Smartphone
 
 
 @pytest.fixture()
@@ -56,3 +56,13 @@ def product_for_new_product(product_iphone):
             "quantity": 5,
         }
     )
+
+
+@pytest.fixture()
+def product_lawn_grass():
+    return LawnGrass("Газонная трава", "Элитная трава для газона", 500.0, 20, "Россия", "7 дней", "Зеленый")
+
+
+@pytest.fixture()
+def product_smartphone():
+    return Smartphone("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14, 90.3, "Note 11", 1024, "Синий")
