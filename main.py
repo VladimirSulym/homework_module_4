@@ -109,6 +109,7 @@ class Category:
             return all_price / Category.product_count
         except ZeroDivisionError or TypeError:
             return 0
+
     def add_product(self, value):
         if isinstance(value, Product):
             self.__products.append(value)
@@ -166,7 +167,8 @@ class LawnGrass(Product):
 #         product_invalid = Product("Бракованный товар", "Неверное количество", 1000.0, 0)
 #     except ValueError as e:
 #         print(
-#             "Возникла ошибка ValueError прерывающая работу программы при попытке добавить продукт с нулевым количеством")
+#             "Возникла ошибка ValueError прерывающая работу программы при попытке добавить
+#             продукт с нулевым количеством")
 #     else:
 #         print("Не возникла ошибка ValueError при попытке добавить продукт с нулевым количеством")
 #
