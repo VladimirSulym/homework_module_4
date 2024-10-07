@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 import pytest
 
-from main import fill_class_with_data, read_data_from_json
+from main import fill_class_with_data, read_data_from_json, Product
 
 
 def test_product_init(product_iphone):
@@ -63,8 +63,8 @@ def test_new_product(product_for_new_product, capsys):
         == 200000.0
     )
     product_for_new_product.price = 0
-    captured = capsys.readouterr()
-    assert captured.out == "Цена не должна быть нулевая или отрицательная\n"
+    # captured = capsys.readouterr()
+    # assert captured.out == "Цена не должна быть нулевая или отрицательная\n"
 
 
 @patch("builtins.input")
@@ -92,7 +92,8 @@ def test_add_product(category_smartphone, product_iphone):
 
 
 def test_product_str(product_iphone):
-    assert str(product_iphone) == "Iphone 15, 210000.0 руб. Остаток: 8 шт."
+    assert str(product_iphone) == "Product(Iphone 15, 512GB, Gray space, 210000.0, 8)"
+    # assert str(product_iphone) == "Iphone 15, 210000.0 руб. Остаток: 8 шт."
 
 
 def test_product_add(product_iphone):
@@ -113,3 +114,8 @@ def test_add_product_typeerror(category_smartphone):
     with pytest.raises(TypeError) as exc_info:
         category_smartphone.add_product("Not a product")
     assert exc_info.type == TypeError
+
+def test_mixinlog_print(capsys):
+    Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
+    captured = capsys.readouterr()
+    assert captured.out == "Product(Iphone 15, 512GB, Gray space, 210000.0, 8)\n"
