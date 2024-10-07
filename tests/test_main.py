@@ -16,7 +16,7 @@ def test_category_init(category_smartphone):
         category_smartphone.description
         == "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни"
     )
-    assert category_smartphone.products == ["Iphone 15, 210000.0 руб. Остаток: 8 шт."]
+    assert category_smartphone.products == "Iphone 15, 210000.0 руб. Остаток: 8 шт.\n"
 
     assert category_smartphone.category_count == 1
     assert category_smartphone.product_count == 1
