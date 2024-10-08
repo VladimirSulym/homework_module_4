@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 import pytest
 
-from main import fill_class_with_data, read_data_from_json, Product
+from main import Category, Product, fill_class_with_data, read_data_from_json
 
 
 def test_product_init(product_iphone):
@@ -115,7 +115,19 @@ def test_add_product_typeerror(category_smartphone):
         category_smartphone.add_product("Not a product")
     assert exc_info.type == TypeError
 
+
 def test_mixinlog_print(capsys):
     Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
     captured = capsys.readouterr()
     assert captured.out == "Product(Iphone 15, 512GB, Gray space, 210000.0, 8)\n"
+
+
+def test_product_init_zero_quantity():
+    with pytest.raises(ValueError) as exc_info:
+        Product("Бракованный товар", "Неверное количество", 1000.0, 0)
+    assert exc_info.type == ValueError
+
+
+def test_category_middle_price():
+    category_empty = Category("Пустая категория", "Категория без продуктов", [])
+    assert category_empty.middle_price() == 0
